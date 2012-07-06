@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" media="all" href="style.css" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="psgallery.js"></script>
+        <script type="text/javascript">
+            jQuery(function(){
+                jQuery('.psgallery1').psgallery();
+//                jQuery('.psgallery2').psgallery({tnmaxsize: 100, notn: true});
+                jQuery('.psgallery2').psgallery({notn: false, tnmaxheight: 100, tnmaxwidth: 500});
+                jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500});
+            });
+        </script>
+    </head>
+    <body>
+        <div class="content">
+            <h1>Psgallery examples</h1>
+            <p>Here are couple of examples, how to use <code>psgallery.js</code>.</p>
+            <p>The gallery is written as html-list, which appears as html code as this:</p>
+<div class="codeexample">
+&lt;ul class="psgallery1"&gt;
+    &lt;li&gt;&lt;a href="images/DSC_0818.JPG"&gt;Redcurrant berries&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/DSC_0995.JPG"&gt;Flowers&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/DSC_1001.JPG"&gt;Flower and insect&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/IMAG0129.jpg"&gt;Autumn has come.&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/p4260052b.jpg"&gt;Spring time in a park.&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/p4260055b.jpg"&gt;By the sea&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/p4260057b.jpg"&gt;By the sea 2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="images/p4260134.jpg"&gt;Squirrel in the park eating some nuts.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</div>
+            <p>And normally a browser renders it like this:</p>
+            <ul>
+                <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
+                <li><a href="images/DSC_0995.JPG">Flowers</a></li>
+                <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>
+                <li><a href="images/IMAG0129.jpg">Autumn has come.</a></li>
+                <li><a href="images/p4260052b.jpg">Spring time in a park.</a></li>
+                <li><a href="images/p4260055b.jpg">By the sea</a></li>
+                <li><a href="images/p4260057b.jpg">By the sea 2</a></li>
+                <li><a href="images/p4260134.jpg">Squirrel in the park eating some nuts.</a></li>
+            </ul>
+
+            <p><code>psgallery.js</code> searches for thumbnails with given filename pattern and shows
+                them and makes them clickable. Clicking of a thumbnail opens the larger image in
+                overlay view mode which can be browsed forwards and backwards.</p>
+
+            <h2>With thumbnail images</h2>
+            <p>Here there are separate thumbnail images for each picture. By default <code>psgallery</code>
+                searches for picture named <code>filename.jpg</code> a thumbnail named <code>filename-tn.jpg</code>.
+                The added suffix can be changed by using option <code>tnadd</code>.</p>
+            <p>For example:</p>
+            <div class="codeexample">
+jQuery('.psgallery1').psgallery({tnadd: '-tn'});
+            </div>
+            <ul class="psgallery1">
+                <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
+                <li><a href="images/DSC_0995.JPG">Flowers</a></li>
+                <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>
+                <li><a href="images/IMAG0129.jpg">Autumn has come.</a></li>
+                <li><a href="images/p4260052b.jpg">Spring time in a park.</a></li>
+                <li><a href="images/p4260055b.jpg">By the sea</a></li>
+                <li><a href="images/p4260057b.jpg">By the sea 2</a></li>
+                <li><a href="images/p4260134.jpg">Squirrel in the park eating some nuts.</a></li>
+            </ul>
+
+            <h2>Without thumbnail image files</h2>
+            <p><strong>This is strongly discouraged!</strong> This is slow and bad.</p>
+            <p>If there are no separate thumbnail images, big images can be used as thumbnails.
+                By default this is not used, since using large image files as thumbnails is heavy!
+                This can be turned on by setting option <code>notn: true</code>.</p>
+            <p>The maximum (pixel) size of the thumbnail can be given as option <code>tnmaxsize</code>
+                for both width and height together or with options <code>tnmaxwidth</code> and
+                <code>tnmaxheight</code> separately.</p>
+            <p>For example:</p>
+            <div class="codeexample">
+jQuery('.psgallery2').psgallery({notn: true, tnmaxsize: 150});
+jQuery('.psgallery2').psgallery({notn: true, tnmaxheight: 200, tnmaxwidth: 500});
+            </div>
+            <ul class="psgallery2">
+                <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
+                <li><a href="images/DSC_0995.JPG">Flowers</a></li>
+                <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>
+                <li><a href="images/IMAG0129.jpg">Autumn has come.</a></li>
+                <li><a href="images/p4260052b.jpg">Spring time in a park.</a></li>
+                <li><a href="images/p4260055b.jpg">By the sea</a></li>
+                <li><a href="images/p4260057b.jpg">By the sea 2</a></li>
+                <li><a href="images/p4260134.jpg">Squirrel in the park eating some nuts.</a></li>
+            </ul>
+
+            <h2>Other options</h2>
+            <p>By default the gallery is not shown in full screen mode. Full screen mode can be turned
+                on with <code>fullscreen: true</code>.</p>
+            <p>By default next and previous buttons work circularly, i.e., next of the last picture is the first
+                one and the previous of the first image is the last one. This can be turned of with option
+                <code>circular: false</code>. This removes previous and next buttons from first and last
+                image respectively.</p>
+            <p>For example:</p>
+            <div class="codeexample">
+jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500});
+            </div>
+            <ul class="psgallery3">
+                <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
+                <li><a href="images/DSC_0995.JPG">Flowers</a></li>
+                <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>
+                <li><a href="images/IMAG0129.jpg">Autumn has come.</a></li>
+                <li><a href="images/p4260052b.jpg">Spring time in a park.</a></li>
+                <li><a href="images/p4260055b.jpg">By the sea</a></li>
+                <li><a href="images/p4260057b.jpg">By the sea 2</a></li>
+                <li><a href="images/p4260134.jpg">Squirrel in the park eating some nuts.</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
