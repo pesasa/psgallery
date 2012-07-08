@@ -9,7 +9,7 @@
                 jQuery('.psgallery1').psgallery();
 //                jQuery('.psgallery2').psgallery({tnmaxsize: 100, notn: true});
                 jQuery('.psgallery2').psgallery({notn: false, tnmaxheight: 100, tnmaxwidth: 500});
-                jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500});
+                jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true});
             });
         </script>
     </head>
@@ -53,7 +53,9 @@
                 The added suffix can be changed by using option <code>tnadd</code>.</p>
             <p>For example:</p>
             <div class="codeexample">
-jQuery('.psgallery1').psgallery({tnadd: '-tn'});
+jQuery('.psgallery1').psgallery({
+    tnadd: '-tn'
+});
             </div>
             <ul class="psgallery1">
                 <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
@@ -76,8 +78,18 @@ jQuery('.psgallery1').psgallery({tnadd: '-tn'});
                 <code>tnmaxheight</code> separately.</p>
             <p>For example:</p>
             <div class="codeexample">
-jQuery('.psgallery2').psgallery({notn: true, tnmaxsize: 150});
-jQuery('.psgallery2').psgallery({notn: true, tnmaxheight: 200, tnmaxwidth: 500});
+jQuery('.psgallery2').psgallery({
+    notn: true,
+    tnmaxsize: 150
+});
+
+// or
+
+jQuery('.psgallery2').psgallery({
+    notn: true,
+    tnmaxheight: 200,
+    tnmaxwidth: 500
+});
             </div>
             <ul class="psgallery2">
                 <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
@@ -97,9 +109,17 @@ jQuery('.psgallery2').psgallery({notn: true, tnmaxheight: 200, tnmaxwidth: 500})
                 one and the previous of the first image is the last one. This can be turned of with option
                 <code>circular: false</code>. This removes previous and next buttons from first and last
                 image respectively.</p>
+            <p>You can add a thumbnail preview on top of the view mode with option <code>filmstrip: true</code>.
+                This is off by default.</p>
             <p>For example:</p>
             <div class="codeexample">
-jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500});
+jQuery('.psgallery3').psgallery({
+    fullscreen: true,
+    circular: false,
+    tnmaxheight: 100,
+    tnmaxwidth: 500,
+    filmstrip: true
+});
             </div>
             <ul class="psgallery3">
                 <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
