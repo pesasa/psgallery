@@ -108,8 +108,9 @@
         var isopen = (this.wrapper.hasClass('psgimage_wrapper'));
         var gallery = this;
         if (!isopen){
-            this.place.after('<div class="psgimage_wrapper '+this.settings.style+'"><div class="psgimage_container"></div></div>');
+            this.place.after('<div class="psgimage_wrapper '+this.settings.style+'" tabindex="0"><div class="psgimage_container"></div></div>');
             this.wrapper = this.place.next();
+            this.keyinput = this.wrapper.find('input.psgkeyinput');
         }
         if (this.settings.fullscreen){
             this.wrapper.addClass('psg_fullscreen');
@@ -161,21 +162,47 @@
         this.tools.append('<a href="javascript:;" class="psgallery_close"><span>&#x2718;</span></a>');
         this.tools.append('<a href="javascript:;" class="psgallery_fullscreen"><span>&#x21f1;</span></a>');
         this.tools.find('a.psgallery_close').click(function(){
-            $(this).parents('.psgimage_container').fadeOut(500, function(){
-                gallery.wrapper.remove();
-            });
+            gallery.close();
         });
         this.tools.find('a.psgallery_fullscreen').click(function(){
-            $(this).parents('.psgimage_wrapper').toggleClass('psg_fullscreen');
+            gallery.fullscreen();
         });
         this.tools.find('a.psgallery_previous').click(function(){
-            gallery.index = (gallery.index - 1 + gallery.items.length) % gallery.items.length;
-            gallery.showImage();
+            gallery.previous();
         });
         this.tools.find('a.psgallery_next').click(function(){
-            gallery.index = (gallery.index + 1) % gallery.items.length;
-            gallery.showImage();
+            gallery.next();
         });
+        this.wrapper.keypress(function(e){
+            switch (e.keyCode){
+                case 8:
+                    gallery.previous();
+                    break;
+                case 37:
+                    gallery.previous();
+                    break;
+                case 39:
+                    gallery.next();
+                    break;
+                case 27:
+                    gallery.close();
+                    break;
+                case 0:
+                    switch (e.which){
+                        case 102:
+                            gallery.fullscreen();
+                            break;
+                        case 32:
+                            gallery.next();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }).focus();
         this.showImage(this.index);
     }
     
@@ -194,7 +221,11 @@
         var imagename = this.items[this.index].href.split('/').pop() || '';
         var imghtml = '<img class="psgimg" src="'+this.items[this.index].href+'" alt="'+imagename+'" title="'+this.items[this.index].caption+'" />';
         this.image.fadeOut(gallery.settings.fadespeed, function(){
-            $(this).empty().append(imghtml).fadeIn(gallery.settings.fadespeed);
+            $(this).empty().append(imghtml).fadeIn(gallery.settings.fadespeed, function(){
+                gallery.image.find('img.psgimg').click(function(){
+                    gallery.next();
+                });
+            });
         });
         this.caption.empty().append(this.items[this.index].caption);
         this.kofn.empty().append((this.index+1) + '/' + this.items.length);
@@ -202,6 +233,27 @@
             this.filmstrip.find('.psg_currentimage').removeClass('psg_currentimage');
             this.filmstrip.find('li:eq('+this.index+')').addClass('psg_currentimage');
         }
+    }
+    
+    Psgallery.prototype.close = function(){
+        var gallery = this;
+        this.container.fadeOut(500, function(){
+            gallery.wrapper.remove();
+        });
+    }
+    
+    Psgallery.prototype.fullscreen = function(){
+        this.wrapper.toggleClass('psg_fullscreen');
+    }
+    
+    Psgallery.prototype.next = function(){
+        this.index = (this.index + 1) % this.items.length;
+        this.showImage();
+    }
+
+    Psgallery.prototype.previous = function(){
+        this.index = (this.index - 1 + this.items.length) % this.items.length;
+        this.showImage();
     }
 
     Psgallery.images = {
