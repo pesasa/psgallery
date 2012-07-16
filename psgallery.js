@@ -5,8 +5,8 @@
  * pesasa@iki.fi
  * 06.07.2012
  *
- * License: GNU Lesser General Public License (LGPL)
- *    http://www.gnu.org/licenses/lgpl.html
+ * License: WTFPL
+ *    http://sam.zoy.org/wtfpl/COPYING
  ********************************************************/
 
 
