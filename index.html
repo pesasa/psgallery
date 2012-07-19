@@ -10,8 +10,10 @@
 //                jQuery('.psgallery2').psgallery({tnmaxsize: 100, notn: true});
                 jQuery('.psgallery2').psgallery({notn: false, tnmaxheight: 100, tnmaxwidth: 500});
                 jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true});
+                jQuery('.psgallery4').psgallery({tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true, style: "psg_blue"});
             });
         </script>
+        <link type="text/css" rel="stylesheet" media="all" href="theme_blue/psg_blue.css" />
     </head>
     <body>
 <a href="https://github.com/pesasa/psgallery"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png" alt="Fork me on GitHub"></a>
@@ -122,6 +124,29 @@ jQuery('.psgallery3').psgallery({
 });
             </div>
             <ul class="psgallery3">
+                <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
+                <li><a href="images/DSC_0995.JPG">Flowers</a></li>
+                <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>
+                <li><a href="images/IMAG0129.jpg">Autumn has come.</a></li>
+                <li><a href="images/p4260052b.jpg">Spring time in a park.</a></li>
+                <li><a href="images/p4260055b.jpg">By the sea</a></li>
+                <li><a href="images/p4260057b.jpg">By the sea 2</a></li>
+                <li><a href="images/p4260134.jpg">Squirrel in the park eating some nuts.</a></li>
+            </ul>
+
+            <h2>Own style</h2>
+            <p>The default outlook of the galleri is built in the <code>psgallery.js</code>.
+                It is possible, however, to customize the user interface with own css-file and ui-images.</p>
+            <p>The option <code>style: "ownclass"</code>' adds html-class <em>"ownclass"</em> to the wrapper element of gallery and
+                this class can be used to override default css-rules in your own css-file.</p>
+            <p>For example:</p>
+            <div class="codeexample">
+jQuery('.psgallery4').psgallery({
+    filmstrip: true,
+    style: "psg_blue"
+});
+            </div>
+            <ul class="psgallery4">
                 <li><a href="images/DSC_0818.JPG">Redcurrant berries</a></li>
                 <li><a href="images/DSC_0995.JPG">Flowers</a></li>
                 <li><a href="images/DSC_1001.JPG">Flower and insect</a></li>

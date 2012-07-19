@@ -1,0 +1,74 @@
+ul.psgallery.psg_blue {
+    background-color: rgba(200,200,255,1);
+    border: 2px solid blue;
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 5px 5px 5px rgba(200,200,255,1);
+}
+
+ul.psgallery.psg_blue li {
+    border: 1px solid blue;
+    background-color: white;
+    padding: 0.2em;
+    margin: 0.3em;
+}
+
+.psgimage_wrapper.psg_blue {
+    background-color: rgba(200,200,255,0.8);
+}
+
+.psgimage_wrapper.psg_blue .psgimage_container {
+    border: 4px solid blue;
+    background: rgba(100,100,255,1);
+}
+
+.psgimage_wrapper.psg_blue .psgallery_imagewrapper {
+    padding-bottom: 1em;
+}
+
+.psgimage_wrapper.psg_blue img.psgimg {
+    background-color: white;
+    padding: 0.3em;
+    border: 2px solid blue;
+}
+
+.psgimage_wrapper.psg_blue .psgallery_captionwrapper {
+    background: rgba(100,100,255,1);
+    box-shadow: none;
+    font-size: 130%;
+}
+
+.psgimage_wrapper.psg_blue .psgallery_captionwrapper .psgallery_kofn {
+    background: rgba(100,100,255,1);
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+.psgimage_wrapper.psg_blue.psg_fullscreen .psgallery_captionwrapper:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.psgimage_wrapper.psg_blue a.psgallery_previous {
+    background: transparent url(blue-previous.png) left top no-repeat;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    left: 5px;
+}
+
+.psgimage_wrapper.psg_blue a.psgallery_next {
+    background: transparent url(blue-next.png) left top no-repeat;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    right: 5px;
+}
+.psgimage_wrapper.psg_blue a.psgallery_close {
+    background: transparent url(blue-close.png) left top no-repeat;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    top: 5px;
+    right: 5px;
+}
