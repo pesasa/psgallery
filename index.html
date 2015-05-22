@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
         <link type="text/css" rel="stylesheet" media="all" href="style.css" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="psgallery.js"></script>
@@ -9,7 +10,7 @@
                 jQuery('.psgallery1').psgallery();
 //                jQuery('.psgallery2').psgallery({tnmaxsize: 100, notn: true});
                 jQuery('.psgallery2').psgallery({notn: false, tnmaxheight: 100, tnmaxwidth: 500});
-                jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true});
+                jQuery('.psgallery3').psgallery({fullscreen: true, circular: false, tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true, effect: 'flip'});
                 jQuery('.psgallery4').psgallery({tnmaxheight: 100, tnmaxwidth: 500, filmstrip: true, style: "psg_blue"});
             });
         </script>
@@ -48,6 +49,9 @@
             <p><code>psgallery.js</code> searches for thumbnails with given filename pattern and shows
                 them and makes them clickable. Clicking of a thumbnail opens the larger image in
                 overlay view mode which can be browsed forwards and backwards.</p>
+            
+            <p>Navigation can be done either with mouse or with keyboard. Left and right arrows browse the images,
+                f-key toggles fullscreen mode and esc quits the overlay view mode.</p>
 
             <h2>With thumbnail images</h2>
             <p>Here there are separate thumbnail images for each picture. By default <code>psgallery</code>
@@ -71,7 +75,7 @@ jQuery('.psgallery1').psgallery({
             </ul>
 
             <h2>Without thumbnail image files</h2>
-            <p><strong>This is strongly discouraged!</strong> This is slow and bad.</p>
+            <p><strong>This is strongly discouraged!</strong> This can be slow and bad.</p>
             <p>If there are no separate thumbnail images, big images can be used as thumbnails.
                 By default this is not used, since using large image files as thumbnails is heavy!
                 This can be turned on by setting option <code>notn: true</code>.</p>
@@ -113,6 +117,9 @@ jQuery('.psgallery2').psgallery({
                 image respectively.</p>
             <p>You can add a thumbnail preview on top of the view mode with option <code>filmstrip: true</code>.
                 This is off by default.</p>
+            <p>The user can choose an effect for changing the images with option <code>effect</code>. Available effects
+                are <code>fade</code>, <code>resize</code> and <code>flip</code>. By default, the gallery uses fading.
+                Effects are done with CSS rules and one can "easily" make own effects. See the source code for examples.</p>
             <p>For example:</p>
             <div class="codeexample">
 jQuery('.psgallery3').psgallery({
@@ -120,7 +127,8 @@ jQuery('.psgallery3').psgallery({
     circular: false,
     tnmaxheight: 100,
     tnmaxwidth: 500,
-    filmstrip: true
+    filmstrip: true,
+    effect: 'flip'
 });
             </div>
             <ul class="psgallery3">
@@ -136,10 +144,10 @@ jQuery('.psgallery3').psgallery({
 
             <h2>Own style</h2>
             <p>The default outlook of the galleri is built in the <code>psgallery.js</code>.
-                It is possible, however, to customize the user interface with own css-file and ui-images.</p>
+                It is possible, however, to customize the user interface with own css-file.</p>
             <p>The option <code>style: "ownclass"</code>' adds html-class <em>"ownclass"</em> to the wrapper element of gallery and
                 this class can be used to override default css-rules in your own css-file.</p>
-            <p>For example:</p>
+            <p>For example (see the css-file <a href="theme_blue/psg_blue.css">psg_blue.css</a>):</p>
             <div class="codeexample">
 jQuery('.psgallery4').psgallery({
     filmstrip: true,
