@@ -135,8 +135,9 @@
         };
         this.container = this.wrapper.children('.psgimage_container');
         this.container.append(Psgallery.templates.content);
-        this.imageWrapperVisible = this.container.children('.psgallery_imagewrapper').eq(0);
-        this.imageWrapperHidden = this.container.children('.psgallery_imagewrapper').eq(1);
+        this.iwprevious = this.container.children('.psgallery_imagewrapper').eq(0);
+        this.iwcurrent = this.container.children('.psgallery_imagewrapper').eq(1);
+        this.iwnext = this.container.children('.psgallery_imagewrapper').eq(2);
         this.kofn = this.container.find('.psgallery_captionwrapper .psgallery_kofn');
         this.caption = this.container.find('.psgallery_captionwrapper .psgallery_caption');
         this.tools = this.container.find('.psgallery_toolwrapper');
@@ -258,11 +259,12 @@
             this.filmstrip.children('[data-psgstripindex="'+this.index+'"]').addClass('psg_currentimage');
         };
         var imghtml = '<img class="psgimg" src="" alt="" title="" />';
-        this.visibleImage = $(imghtml);
-        this.hiddenImage = $(imghtml);
-        this.imageWrapperVisible.html(this.visibleImage);
-        this.imageWrapperHidden.html(this.hiddenImage);
-        this.imageWrapperHidden.addClass('psgimg-hidden');
+        this.previousImage = $(imghtml);
+        this.currentImage = $(imghtml);
+        this.nextImage = $(imghtml);
+        this.iwprevious.html(this.previousImage);
+        this.iwcurrent.html(this.currentImage);
+        this.iwnext.html(this.nextImage);
         this.wrapper.addClass('psg-visible').focus();
         this.showImage(this.index);
     }
@@ -272,6 +274,7 @@
      */
     Psgallery.prototype.showImage = function(index){
         if (typeof(index) === 'number'){
+            this.oldindex = this.index;
             this.index = index;
         };
         var gallery = this;
@@ -286,18 +289,39 @@
             };
         };
         var imagename = this.items[this.index].href.split('/').pop() || '';
-        var tempimage = this.hiddenImage;
-        this.hiddenImage = this.visibleImage;
-        this.visibleImage = tempimage;
-        this.visibleImage
-            .attr('src', this.items[this.index].href)
-            .attr('alt', imagename)
-            .attr('title', this.items[this.index].caption);
-        var tempwrapper = this.imageWrapperHidden;
-        this.imageWrapperHidden = this.imageWrapperVisible;
-        this.imageWrapperVisible = tempwrapper;
-        this.imageWrapperHidden.addClass('psgimg-hidden');
-        this.imageWrapperVisible.removeClass('psgimg-hidden');
+        var imagedata = this.items[this.index];
+        
+        var tmpwrapper;
+        if ((!(this.index === this.items.length - 1 && this.oldindex === 0) && this.index > this.oldindex) || (this.index === 0 && this.oldindex === this.items.length - 1)) {
+            this.iwnext.children('img')
+                .attr('src', imagedata.href)
+                .attr('alt', imagename)
+                .attr('title', imagedata.caption);
+            tmpwrapper = this.iwcurrent;
+            this.iwcurrent = this.iwnext;
+            this.iwnext = this.iwprevious;
+            this.iwprevious = tmpwrapper;
+            this.iwprevious.addClass('psg-hidden');
+        } else if (this.index < this.oldindex || (this.index === this.items.length - 1 && this.oldindex === 0)) {
+            this.iwprevious.children('img')
+                .attr('src', imagedata.href)
+                .attr('alt', imagename)
+                .attr('title', imagedata.caption);
+            tmpwrapper = this.iwcurrent;
+            this.iwcurrent = this.iwprevious;
+            this.iwprevious = this.iwnext;
+            this.iwnext = tmpwrapper;
+            this.iwnext.addClass('psg-hidden');
+        } else {
+            this.iwcurrent.children('img')
+                .attr('src', imagedata.href)
+                .attr('alt', imagename)
+                .attr('title', imagedata.caption);
+        };
+        this.iwcurrent.removeClass('psg-hidden');
+        this.iwcurrent.removeClass('psg-previous psg-next').addClass('psg-current');
+        this.iwnext.removeClass('psg-previous psg-current').addClass('psg-next');
+        this.iwprevious.removeClass('psg-current psg-next').addClass('psg-previous');
         
         this.caption.html(this.items[this.index].caption);
         this.kofn.html((this.index+1) + '/' + this.items.length);
@@ -325,6 +349,7 @@
      * Show the next image
      */
     Psgallery.prototype.next = function(){
+        this.oldindex = this.index;
         this.index = (this.index + 1) % this.items.length;
         this.showImage();
     };
@@ -333,14 +358,16 @@
      * Show the previous image
      */
     Psgallery.prototype.previous = function(){
+        this.oldindex = this.index;
         this.index = (this.index - 1 + this.items.length) % this.items.length;
         this.showImage();
     };
     
     Psgallery.templates = {
         content: [
-            '<div class="psgallery_imagewrapper psg-front"></div>',
-            '<div class="psgallery_imagewrapper psg-back"></div>',
+            '<div class="psgallery_imagewrapper psg-previous"></div>',
+            '<div class="psgallery_imagewrapper psg-current"></div>',
+            '<div class="psgallery_imagewrapper psg-next"></div>',
             '<div class="psgallery_captionwrapper">',
             '    <span class="psgallery_kofn"></span>',
             '    <div class="psgallery_caption"></div>',
@@ -388,23 +415,24 @@
         '.psgallery_imagewrapper.psgimg-hidden img.psgimg {display: none;}',
         
         // Effects (fade)
-        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psgimg-hidden img.psgimg {display: inline-block;}',
-        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper {opacity: 1; transition: opacity 0.5s;}',
-        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psgimg-hidden {opacity: 0; transition: opacity 0.5s;}',
+        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psg-previous img.psgimg, .psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psg-next img.psgimg {display: inline-block;}',
+        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper {opacity: 1; transition: opacity 0.5s; z-index: 2;}',
+        '.psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psg-previous, .psgimage_wrapper[data-psgeffect="fade"] .psgallery_imagewrapper.psg-next {opacity: 0; transition: opacity 0.5s; z-index: 1;}',
 
         // Effects (resize)
-        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psgimg-hidden img.psgimg {display: inline-block;}',
-        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper {top: 0; bottom: 0; transition: top 0.5s 0.5s, bottom 0.5s 0.5s;}',
-        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psgimg-hidden {top: 50%; bottom: 50%; transition: top 0.5s, bottom 0.5s;}',
+        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psg-previous img.psgimg, .psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psg-next img.psgimg {display: inline-block;}',
+        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper {top: 0; bottom: 0; transition: top 0.5s 0.5s, bottom 0.5s 0.5s; z-index: 2;}',
+        '.psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psg-previous, .psgimage_wrapper[data-psgeffect="resize"] .psgallery_imagewrapper.psg-next {top: 50%; bottom: 50%; transition: top 0.5s, bottom 0.5s; z-index: 1;}',
 
         // Effects (flip)
         '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psgimg-hidden img.psgimg {display: inline-block;}',
         '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper {overflow: visible; perspective: 1000px;}',
         '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper img {transition: 1s; transform-style: preserve-3d; position: relative; backface-visibility: hidden;}',
-        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-front img {transform: rotateY(0deg);}',
-        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-back img {transform: rotateY(0deg);}',
-        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-front.psgimg-hidden img {transform: rotateY(180deg);}',
-        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-back.psgimg-hidden img {transform: rotateY(-180deg);}',
+        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-previous img {transform: rotateY(-180deg);}',
+        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-current img {transform: rotateY(0deg);}',
+        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-next img {transform: rotateY(180deg);}',
+        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-previous.psg-hidden img {visibility: hidden; transform: rotateY(-180deg);}',
+        '.psgimage_wrapper[data-psgeffect="flip"] .psgallery_imagewrapper.psg-next.psg-hidden img {visibility: hidden; transform: rotateY(180deg);}',
 
         // Caption
         '.psgallery_captionwrapper {margin: 0; padding: 0 0.5em; position: absolute; bottom: 0.5em; left: 0; right: 0; background-color: black; box-shadow: 0 -10px 5px black,0 10px 5px black;}',
